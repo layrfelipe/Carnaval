@@ -21,7 +21,7 @@ app.use("/user", userRoutes)
 app.use("/event", eventRoutes)
 
 app.get("/", (req, res) => {
-    res.json({msg: "Server is running on port 3001"})
+    res.json({msg: "Server is running on port 3004"})
 });
 
 const DB_USER = encodeURIComponent(process.env.DB_USER!);
