@@ -1,0 +1,43 @@
+@font-face {
+    font-family: "Mokoko";
+    src: url('../assets/fonts/MokokoRg.otf') format("opentype");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Mokoko";
+    src: url('../assets/fonts/MokokoBd.otf') format("opentype");
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Mokoko";
+    src: url('../assets/fonts/MokokoTh.otf') format("opentype");
+    font-weight: 100;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Mokoko";
+    src: url('../assets/fonts/MokokoBlk.otf') format("opentype");
+    font-weight: 900;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Mokoko;
+    font-weight: 400;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}

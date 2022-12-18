@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    width: 100%;
+    background: #56053B;
+    justify-content: space-between;
+    color: white;
+    height: 12vh;
+    align-items: center;
+
+    h1 {
+        font: 700 2rem Mokoko;
+    }
+
+    #username {
+        align-self: flex-end;
+        font-size: 1.5rem;
+        margin-bottom: .5rem;
+    }
+}
