@@ -1,8 +1,6 @@
-// MY IMPORTS
 import User from "../models/User";
 import * as errorsHandler from "../errors/BaseErrors";
 
-// DB ACCESS LAYER
 export default class UserService {
 
   async getAll() {

@@ -27,21 +27,33 @@ export class BaseErrors extends Error {
     }
 }
 
-export class UserAlreadyExistsError extends BaseErrors {
-    constructor() {
-        super('UNPROCESSABLE_ENTITY', HttpStatusCode.UNPROCESSABLE_ENTITY, "User already exists");
-    }
-}
-
 export class UserDoesNotExist extends BaseErrors {
     constructor() {
         super('NOT_FOUND', HttpStatusCode.NOT_FOUND, "User doesn't exist");
     }
 }
 
+export class UsernameAlreadyInUse extends BaseErrors {
+    constructor() {
+        super('UNPROCESSABLE_ENTITY', HttpStatusCode.UNPROCESSABLE_ENTITY, "Username already in use");
+    }
+}
+
+export class EmailAlreadyInUse extends BaseErrors {
+    constructor() {
+        super('UNPROCESSABLE_ENTITY', HttpStatusCode.UNPROCESSABLE_ENTITY, "Email already in use");
+    }
+}
+
 export class IncorrectPassword extends BaseErrors {
     constructor() {
         super('UNPROCESSABLE_ENTITY', HttpStatusCode.UNPROCESSABLE_ENTITY, "Invalid password");
+    }
+}
+
+export class ConfirmationDoesNotMatchPassword extends BaseErrors {
+    constructor() {
+        super('NOT_FOUND', HttpStatusCode.NOT_FOUND, "Confirmation doesn't match password");
     }
 }
 

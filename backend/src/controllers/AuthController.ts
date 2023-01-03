@@ -1,19 +1,15 @@
-// 3rd PART IMPORTS
 import { Request, Response } from "express"
 
-// MY IMPORTS
 import AuthService from "../services/AuthService";
 
-// INSTANTIATING SERVICE CLASS - AN ISOLATED LAYER FOR HANDLING COMPLEX BUSINESS LOGIC
 const authService = new AuthService()
 
-// ACTIONS
-export async function createUser (req: Request, res: Response) {
+export async function signUp (req: Request, res: Response) {
     const user:IUserRegister = req.body
 
     try {
-        await authService.create(user);
-        res.status(201).json({msg: "User registered"});
+        const result = await authService.create(user);
+        res.status(201).json({msg: "User registered", token: result.acessToken});
     }
     catch (err: any) {
         res.status(err.httpCode).json(err)   

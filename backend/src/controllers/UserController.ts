@@ -1,10 +1,7 @@
-// 3rd PART IMPORTS
 import { Request, Response } from "express"
 
-// MY IMPORTS
 import UserService from "../services/UserService";
 
-// INSTANTIATING SERVICE CLASS - AN ISOLATED LAYER FOR HANDLING COMPLEX BUSINESS LOGIC
 const userService = new UserService()
 
 export async function getAllUsers (req: Request, res: Response) {
@@ -35,7 +32,7 @@ export async function updateUser (req: Request, res: Response) {
     
     try {
         const updatedUser = await userService.update(id, user)
-        res.status(200).json(user)
+        res.status(200).json(updatedUser)
     }
     catch (err: any) {
         res.status(err.httpCode).json(err)  

@@ -1,10 +1,8 @@
-// 3rd PART IMPORTS
 import { body, param, validationResult } from "express-validator";
 import {Request, Response, NextFunction } from "express";
 import { isValidObjectId } from "mongoose";
 import * as errorsHandler from "../errors/BaseErrors";
 
-// INPUT VALIDATION
 export const validationBodyRules = [
     param("id").custom(value => {
         if (!isValidObjectId(value)) {
@@ -16,7 +14,6 @@ export const validationBodyRules = [
     body("email").exists().notEmpty().isEmail().isLength({min: 4, max: 100}).withMessage("email not valid")
 ];
 
-// INVALID INPUT HANDLER
 export const checkRules = (req: Request, res:Response, next:NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

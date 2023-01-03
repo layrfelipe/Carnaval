@@ -1,9 +1,7 @@
-// 3rd PART IMPORTS
 import { param, validationResult } from "express-validator";
 import {Request, Response, NextFunction } from "express";
 import { isValidObjectId } from "mongoose";
 
-// INPUT VALIDATION
 export const validationBodyRules = [
     param("id").custom(value => {
         if (!isValidObjectId(value)) {
@@ -13,7 +11,6 @@ export const validationBodyRules = [
     })
 ];
 
-// INVALID INPUT HANDLER
 export const checkRules = (req: Request, res:Response, next:NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
