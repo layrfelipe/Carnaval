@@ -4,17 +4,16 @@ import { Router } from "express";
 const routes = Router();
 
 // MY IMPORTS
-import { createUser, getUser, getAllUsers, updateUser, deleteUser } from "../controllers/UserController";
-import * as registerValidator from "../middlewares/register.validator";
-import * as getUserValidator from "../middlewares/getUser.validator";
+import { getUser, getAllUsers, updateUser, deleteUser } from "../controllers/UserController";
+import { checkToken } from "../middlewares/checkToken";
+
 import * as updateUserValidator from "../middlewares/updateUser.validator";
-import * as deleteUserValidator from "../middlewares/deleteUser.validator";
+import * as idValidator from "../middlewares/id.validator";
 
 // DEFINING ENDPOINTS ADDRESSES
 routes.get("/", getAllUsers);
-routes.post("/", registerValidator.validationBodyRules, registerValidator.checkRules, createUser);
-routes.get("/:id", getUserValidator.validationBodyRules, getUserValidator.checkRules, getUser);
+routes.get("/:id", idValidator.validationBodyRules, [idValidator.checkRules, checkToken], getUser);
 routes.patch("/:id", updateUserValidator.validationBodyRules, updateUserValidator.checkRules, updateUser);
-routes.delete("/:id", deleteUserValidator.validationBodyRules, deleteUserValidator.checkRules, deleteUser);
+routes.delete("/:id", idValidator.validationBodyRules, idValidator.checkRules, deleteUser);
 
 export default routes;

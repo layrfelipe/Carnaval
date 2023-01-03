@@ -1,27 +1,31 @@
 // MY IMPORTS
 import User from "../models/User";
+import * as errorsHandler from "../errors/BaseErrors";
 
 // DB ACCESS LAYER
 export default class UserService {
 
-  // OPERATIONS
-  async create(user: IUser) {
-      return await User.create(user)
-  }
-
   async getAll() {
-    return await User.find()
+    const users = await User.find({}, "-password");
+    return users;
   }
 
   async getOne(id: string) {
-    return await User.findOne({_id: id})
+    const result = await User.findOne({_id: id}, "-password");
+    if (!result) throw new errorsHandler.UserDoesNotExist();
+    return result;
   }
 
-  async update(id: string, user: IUser) {
-    return await User.updateOne({_id: id}, user)
+  async update(id: string, user: IUserRegister) {
+    const result = await User.updateOne({_id: id}, user);
+    if (!result) throw new errorsHandler.UserDoesNotExist();
+    return result;
   }
 
   async remove(id: string) {
-    await User.deleteOne({_id: id})
+    const result = await User.findOne({_id: id}, "-password");
+    if (!result) throw new errorsHandler.UserDoesNotExist();
+    const anotherResult = User.deleteOne({_id: id});
+    return anotherResult;
   }
 }

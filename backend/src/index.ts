@@ -6,6 +6,7 @@ import "dotenv/config"
 
 // MY IMPORTS
 import UserRoutes from "./routes/UserRoutes";
+import AuthRoutes from "./routes/AuthRoutes";
 
 // SETTING ENV VARIABLES
 const { PORT, DB_USER, DB_PASSWORD } = require("./config").development
@@ -27,6 +28,7 @@ app.get("/", (req, res) => { // root
     res.json({msg: "Server is running on port 3004"})
 });
 app.use("/users", UserRoutes);
+app.use("/auth", AuthRoutes);
 
 // SETTING DATABASE CONNECTION
 mongoose.set('strictQuery', false);

@@ -7,7 +7,7 @@ import { isValidObjectId } from "mongoose";
 export const validationBodyRules = [
     param("id").custom(value => {
         if (!isValidObjectId(value)) {
-            throw new Error("Invalid id");
+            throw new Error("Invalid ID");
         }
         return true;
     })
