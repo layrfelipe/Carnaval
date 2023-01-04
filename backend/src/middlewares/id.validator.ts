@@ -1,11 +1,12 @@
 import { param, validationResult } from "express-validator";
 import {Request, Response, NextFunction } from "express";
 import { isValidObjectId } from "mongoose";
+import { InvalidID } from "../errors/BaseErrors";
 
 export const validationBodyRules = [
     param("id").custom(value => {
         if (!isValidObjectId(value)) {
-            throw new Error("Invalid ID");
+            throw new InvalidID();
         }
         return true;
     })

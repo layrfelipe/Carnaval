@@ -28,11 +28,11 @@ export async function getUser (req: Request, res: Response) {
 
 export async function updateUser (req: Request, res: Response) {
     const id = req.params.id;
-    const user:IUserRegister = req.body
+    const userNewData = req.body
     
     try {
-        const updatedUser = await userService.update(id, user)
-        res.status(200).json(updatedUser)
+        const userUpdatedData = await userService.update(id, userNewData)
+        res.status(200).json({ msg: "User updated", userUpdatedData })
     }
     catch (err: any) {
         res.status(err.httpCode).json(err)  

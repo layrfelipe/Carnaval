@@ -10,8 +10,7 @@ export const validationBodyRules = [
         }
         return true;
     }),
-    body("username").if(body("username").exists()).notEmpty().isAlphanumeric().isLength({min: 4, max: 16}).withMessage("username not valid"),
-    body("email").if(body("email").exists()).notEmpty().isEmail().isLength({min: 4, max: 100}).withMessage("email not valid"),
+    body("name").if(body("name").exists()).notEmpty().isLength({min: 2, max: 50}).withMessage("name not valid")
 ];
 
 export const checkRules = (req: Request, res:Response, next:NextFunction) => {

@@ -5,6 +5,7 @@ import "dotenv/config"
 
 import UserRoutes from "./routes/UserRoutes";
 import AuthRoutes from "./routes/AuthRoutes";
+import BlockRoutes from "./routes/BlockRoutes";
 
 const { PORT, DB_USER, DB_PASSWORD } = require("./config").development
 
@@ -24,13 +25,14 @@ app.get("/", (req, res) => {
 
 app.use("/users", UserRoutes);
 app.use("/auth", AuthRoutes);
+app.use("/blocks", BlockRoutes);
 
 mongoose.set('strictQuery', false);
 mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.lavxu7q.mongodb.net/?retryWrites=true&w=majority`)
     .then( () => {
-        console.log("Conectamos ao MongoDB");
+        console.log("Connected to MongoDB");
         app.listen(PORT);
     })
     .catch( (err) => {
-        console.log("Erro ao conectar com o MongoDB: ", err);
+        console.log("An error occurred while connecting to MongoDB: ", err);
     });
