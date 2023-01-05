@@ -1,4 +1,4 @@
-export enum HttpStatusCode {
+enum HttpStatusCode {
     OK = 200,
     CREATED = 201,
     NO_CONTENT = 204,
@@ -10,7 +10,7 @@ export enum HttpStatusCode {
     INTERNAL_SERVER = 500
 }
 
-export class BaseErrors extends Error {
+class BaseErrors extends Error {
     public readonly name: string;
     public readonly httpCode: HttpStatusCode;
     public readonly description: string;
@@ -53,7 +53,7 @@ export class PhoneAlreadyInUse extends BaseErrors {
 
 export class IncorrectPassword extends BaseErrors {
     constructor() {
-        super('UNPROCESSABLE_ENTITY', HttpStatusCode.UNPROCESSABLE_ENTITY, "Invalid password");
+        super('UNAUTHORIZED', HttpStatusCode.UNAUTHORIZED, "Invalid password");
     }
 }
 
@@ -84,5 +84,11 @@ export class NameAlreadyInUse extends BaseErrors {
 export class EmptyBodyContent extends BaseErrors {
     constructor() {
         super('UNAUTHORIZED', HttpStatusCode.UNAUTHORIZED, "No content in body request");
+    }
+}
+
+export class InvalidLocation extends BaseErrors {
+    constructor() {
+        super('UNPROCESSABLE_ENTITY', HttpStatusCode.UNPROCESSABLE_ENTITY, "Invalid location");
     }
 }

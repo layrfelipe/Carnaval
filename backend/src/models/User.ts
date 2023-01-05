@@ -20,7 +20,7 @@ const userSchema = new Schema({
 
     birthday: { type: Date, required: true },
 
-    role: { type: String, required: true, enum: Role, default: Role.CITIZEN  },
+    role: { type: String, required: false, enum: Role, default: Role.CITIZEN  },
 
     loc: { type: locationSchema, required: true }
 }, {timestamps: true});

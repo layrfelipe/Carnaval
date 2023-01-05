@@ -2,12 +2,14 @@ import "dotenv/config"
 import User from "../models/User";
 import { UsernameAlreadyInUse, EmailAlreadyInUse, PhoneAlreadyInUse, UserDoesNotExist, IncorrectPassword } from "../errors/BaseErrors";
 import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
-import dateAndTimeHandler from "../utils/datetimeHandler";
+import DatetimeHandler from "../utils/DatetimeHandler";
+import Authentication from "../classes/Authentication";
+import RefreshToken from "../models/RefreshToken";
 
-export default class AuthService {
+export default class AuthService extends Authentication {
+  public datetimeHandler = new DatetimeHandler();
 
-  async create(user: IUserRegister) {
+  public async create(user: IUserRegister) {
       const usernameExists = await User.findOne({username: user.username});
       if (usernameExists) throw new UsernameAlreadyInUse();
 
@@ -21,7 +23,8 @@ export default class AuthService {
       const passwordHash = await bcrypt.hash(user.password, salt);
 
       user.password = "";
-      const formattedBirthday = dateAndTimeHandler(user.birthday)
+
+      const newBirthday = this.datetimeHandler.handler(user.birthday);
 
       const newUser = await User.create({
         username: user.username,
@@ -29,7 +32,7 @@ export default class AuthService {
         password: passwordHash,
         name: user.name,
         phone: user.phone,
-        birthday: formattedBirthday,
+        birthday: newBirthday,
         role: user.role,
         loc: user.loc,
       });
@@ -41,7 +44,7 @@ export default class AuthService {
       return { safeNewUserData, token }
   }
   
-  async login(credentials: IUserLogin) {
+  public async login(credentials: IUserLogin) {
     const userExists = await User.findOne({ username: credentials.username });
     if (!userExists) throw new UserDoesNotExist();
 
@@ -50,12 +53,22 @@ export default class AuthService {
 
     credentials.password = "";
 
-    const token = this.generateAcessToken({ id: userExists._id })
+    const acessToken = this.generateAcessToken({ id: userExists._id });
+    const refreshToken = this.generateRefreshToken({ id: userExists._id });
 
-    return { userExists, token };
+    const newRefreshToken = await RefreshToken.create({
+      token: refreshToken
+    });
+
+    return { userExists, acessToken, refreshToken };
   }
 
-  generateAcessToken(params={}) {
-    return jwt.sign(params, encodeURIComponent(process.env.ACESS_TOKEN_SECRET!), { expiresIn: 86400 });
+  public async token(tokenData: any) {
+    const acessToken = this.generateAcessToken({ _id: tokenData.id })
+    return acessToken;
+  }
+
+  public async logout(acessToken: string) {
+    await RefreshToken.deleteMany({ token: { $ne: acessToken }})
   }
 }

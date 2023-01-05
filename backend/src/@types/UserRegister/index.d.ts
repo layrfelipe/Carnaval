@@ -6,7 +6,7 @@ interface IUserRegister {
     name: string
     phone: string
     birthday: Date
-    role: string
+    role?: string
     loc: any
     friends: string
 }

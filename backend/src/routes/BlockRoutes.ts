@@ -1,17 +1,39 @@
 import { Router } from "express";
-
 const routes = Router();
+import BlockController from "../controllers/BlockController";
+import AuthMiddleware from "../middlewares/AuthMiddleware";
+import { IdValidator, UpdateUserValidator } from "../middlewares/ValidationMiddlewares";
 
-import { createBlock, getAllBlocks, getBlock, deleteBlock, updateBlock } from "../controllers/BlockController";
-import { verifyToken } from "../middlewares/authentication";
+const authMiddleware = new AuthMiddleware()
+const updateUserMiddleware = new UpdateUserValidator()
+const idValidator = new IdValidator()
+const blockController = new BlockController()
 
-import * as updateBlockValidator from "../middlewares/updateBlock.validator";
-import * as idValidator from "../middlewares/id.validator";
+routes.get("/",
+    authMiddleware.verifyToken,
+    blockController.getAllBlocks
+);
 
-routes.get("/", verifyToken, getAllBlocks);
-routes.post("/", createBlock);
-routes.get("/:id", idValidator.validationBodyRules, [idValidator.checkRules, verifyToken], getBlock);
-routes.patch("/:id", updateBlockValidator.validationBodyRules, [updateBlockValidator.checkRules, verifyToken], updateBlock);
-routes.delete("/:id", idValidator.validationBodyRules, [idValidator.checkRules, verifyToken], deleteBlock);
+routes.post("/",
+    blockController.createBlock
+);
+
+routes.get("/:id",
+    idValidator.validationRules,
+    [idValidator.checkRules, authMiddleware.verifyToken],
+    blockController.getBlock
+);
+
+routes.patch("/:id",
+    updateUserMiddleware.validationRules,
+    [updateUserMiddleware.checkRules, authMiddleware.verifyToken],
+    blockController.updateBlock
+);
+
+routes.delete("/:id",
+    idValidator.validationRules,
+    [idValidator.checkRules, authMiddleware.verifyToken],
+    blockController.deleteBlock
+);
 
 export default routes;

@@ -1,16 +1,35 @@
 import { Router } from "express";
-
 const routes = Router();
+import UserController from "../controllers/UserController";
+import { IdValidator, UpdateUserValidator } from "../middlewares/ValidationMiddlewares";
+import AuthMiddleware from "../middlewares/AuthMiddleware";
 
-import { getUser, getAllUsers, updateUser, deleteUser } from "../controllers/UserController";
-import { verifyToken } from "../middlewares/authentication";
+const authMiddleware = new AuthMiddleware();
+const updateUserValidator = new UpdateUserValidator();
+const idValidator = new IdValidator();
+const userController = new UserController();
 
-import * as updateUserValidator from "../middlewares/updateUser.validator";
-import * as idValidator from "../middlewares/id.validator";
+routes.get("/",
+    authMiddleware.verifyToken,
+    userController.getAllUsers
+);
 
-routes.get("/", verifyToken, getAllUsers);
-routes.get("/:id", idValidator.validationBodyRules, [idValidator.checkRules, verifyToken], getUser);
-routes.patch("/:id", updateUserValidator.validationBodyRules, [updateUserValidator.checkRules, verifyToken], updateUser);
-routes.delete("/:id", idValidator.validationBodyRules, [idValidator.checkRules, verifyToken], deleteUser);
+routes.get("/:id",
+    idValidator.validationRules,
+    [idValidator.checkRules, authMiddleware.verifyToken],
+    userController.getUser
+);
+
+routes.patch("/:id",
+    updateUserValidator.validationRules,
+    [updateUserValidator.checkRules, authMiddleware.verifyToken],
+    userController.updateUser
+);
+
+routes.delete("/:id",
+    idValidator.validationRules,
+    [idValidator.checkRules, authMiddleware.verifyToken],
+    userController.deleteUser
+);
 
 export default routes;

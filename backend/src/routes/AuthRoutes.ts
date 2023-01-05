@@ -1,12 +1,30 @@
 import { Router } from "express";
-
 const routes = Router();
+import AuthController from "../controllers/AuthController";
+import AuthMiddleware from "../middlewares/AuthMiddleware";
+import { RegisterUserValidator } from "../middlewares/ValidationMiddlewares";
+const authMiddleware = new AuthMiddleware();
+const registerUserValidator = new RegisterUserValidator();
+const authController = new AuthController()
 
-import { login, signUp } from "../controllers/AuthController";
+routes.post("/signup",
+    registerUserValidator.validationRules,
+    registerUserValidator.checkRules,
+    authController.signUp
+);
 
-import * as signUpValidator from "../middlewares/signUp.validator";
+routes.post("/login",
+    authController.login
+);
 
-routes.post("/signup", signUpValidator.validationBodyRules, signUpValidator.checkRules, signUp);
-routes.post("/login", login)
+routes.post("/token",
+    authMiddleware.verifyRefreshToken,
+    authController.token
+);
+
+routes.delete("/logout",
+    authMiddleware.verifyToken,
+    authController.logout
+);
 
 export default routes;
