@@ -16,11 +16,11 @@ const Home = () => {
     const [pois, setPois] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:3005/blocks").then( (response) => {
+        axios.get("http://localhost:3002/blocks").then( (response) => {
             setBlocks(response.data);
         })
 
-        axios.get("http://localhost:3005/pois").then( (response) => {
+        axios.get("http://localhost:3002/pois").then( (response) => {
             setPois(response.data);
         })
 

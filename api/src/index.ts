@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.json({msg: "Server is running on port 3005"})
+    res.json({msg: "Server is running on port 3002"})
 });
 
 app.use("/users", UserRoutes);
