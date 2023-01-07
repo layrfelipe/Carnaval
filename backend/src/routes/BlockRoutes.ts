@@ -1,9 +1,9 @@
 import { Router } from "express";
 const routes = Router();
 import BlockController from "../controllers/BlockController";
-import { IdValidator, UpdateUserValidator } from "../middlewares/ValidationMiddlewares";
+import { IdValidator, UpdateBlockValidator } from "../middlewares/ValidationMiddlewares";
 
-const updateUserMiddleware = new UpdateUserValidator()
+const updateBlockMiddleware = new UpdateBlockValidator();
 const idValidator = new IdValidator()
 const blockController = new BlockController()
 
@@ -22,8 +22,8 @@ routes.get("/:id",
 );
 
 routes.patch("/:id",
-    updateUserMiddleware.validationRules,
-    [updateUserMiddleware.checkRules],
+    updateBlockMiddleware.validationRules,
+    [updateBlockMiddleware.checkRules],
     blockController.updateBlock
 );
 

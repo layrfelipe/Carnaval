@@ -10,7 +10,7 @@ export default class BlockController {
 
         try {
             const result = await blockService.create(block);
-            res.status(201).json({ msg: "Block created", block: result});
+            res.status(201).json({ msg: "Block created", _id: result._id});
         }
         catch (err: any) {
             res.status(err.httpCode).json(err);

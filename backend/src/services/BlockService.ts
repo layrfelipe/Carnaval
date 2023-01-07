@@ -31,7 +31,7 @@ export default class BlockService {
             description: block.description
         });
 
-        const reducedNewBlockData = { _id: newBlock._id, name: newBlock.name };
+        const reducedNewBlockData = { _id: newBlock._id };
 
         return reducedNewBlockData;
     }
