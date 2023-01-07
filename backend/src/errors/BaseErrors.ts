@@ -75,6 +75,12 @@ export class BlockDoesNotExist extends BaseErrors {
     }
 }
 
+export class POIDoesNotExist extends BaseErrors {
+    constructor() {
+        super('NOT_FOUND', HttpStatusCode.NOT_FOUND, "POI doesn't exist");
+    }
+}
+
 export class InvalidBlockID extends BaseErrors {
     constructor() {
         super('NOT_FOUND', HttpStatusCode.NOT_FOUND, "Invalid ID");

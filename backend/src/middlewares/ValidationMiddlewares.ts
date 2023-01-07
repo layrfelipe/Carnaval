@@ -169,3 +169,45 @@ export class UpdateBlockValidator extends Validation {
         next();
     };
 }
+
+export class RegisterPOIValidator extends Validation {
+    public validationRules: ValidationChain[] = [
+        body("name").exists().notEmpty().isString().isLength( {min: 2, max: 40} ).toLowerCase().trim().withMessage("block name not valid"),
+        body("category").exists().notEmpty().isString().isLength( {min: 6, max: 8} ).toLowerCase().trim().withMessage("category not valid"),
+        body("loc").exists().notEmpty().custom((value, { req }) => {
+            if (value.type != "Point" || !(value.coordinates instanceof Array)) {
+                throw new InvalidLocation();
+            }
+            return true;
+        }),
+    ];
+
+    public checkRules = (req: Request, res:Response, next:NextFunction) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        next();
+    };
+}
+
+export class UpdatePOIValidator extends Validation {
+    public validationRules: ValidationChain[] = [
+        body("name").if(body("name").exists()).notEmpty().isString().isLength( {min: 2, max: 60} ).toLowerCase().trim().withMessage("name not valid"),
+        body("category").if(body("category").exists()).notEmpty().isString().isLength( {min: 6, max: 8} ).toLowerCase().trim().withMessage("category not valid"),
+        body("loc").if(body("loc").exists()).notEmpty().custom((value, { req }) => {
+            if (value.type != "Point" || !(value.coordinates instanceof Array)) {
+                throw new InvalidLocation();
+            }
+            return true;
+        }),
+    ];
+
+    public checkRules = (req: Request, res:Response, next:NextFunction) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        next();
+    };
+}
