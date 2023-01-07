@@ -4,7 +4,6 @@ import { UsernameAlreadyInUse, EmailAlreadyInUse, PhoneAlreadyInUse, UserDoesNot
 import bcrypt from "bcrypt"
 import DatetimeHandler from "../utils/DatetimeHandler";
 import Authentication from "../classes/Authentication";
-import RefreshToken from "../models/RefreshToken";
 
 export default class AuthService extends Authentication {
   public datetimeHandler = new DatetimeHandler();
@@ -39,9 +38,7 @@ export default class AuthService extends Authentication {
 
       const safeNewUserData = { username: newUser.username, _id: newUser._id }
 
-      const token = this.generateAcessToken({ id: newUser._id })
-
-      return { safeNewUserData, token }
+      return { safeNewUserData }
   }
   
   public async login(credentials: IUserLogin) {
@@ -49,26 +46,10 @@ export default class AuthService extends Authentication {
     if (!userExists) throw new UserDoesNotExist();
 
     const checkPassword = await bcrypt.compare(credentials.password, userExists!.password);
+    credentials.password = "";
     if (!checkPassword) throw new IncorrectPassword();
 
-    credentials.password = "";
 
-    const acessToken = this.generateAcessToken({ id: userExists._id });
-    const refreshToken = this.generateRefreshToken({ id: userExists._id });
-
-    const newRefreshToken = await RefreshToken.create({
-      token: refreshToken
-    });
-
-    return { userExists, acessToken, refreshToken };
-  }
-
-  public async token(tokenData: any) {
-    const acessToken = this.generateAcessToken({ _id: tokenData.id })
-    return acessToken;
-  }
-
-  public async logout(acessToken: string) {
-    await RefreshToken.deleteMany({ token: { $ne: acessToken }})
+    return { userExists };
   }
 }

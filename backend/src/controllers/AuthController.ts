@@ -10,7 +10,7 @@ export default class AuthController {
 
         try {
             const result = await authService.create(user);
-            res.status(201).json({msg: "User registered", user: result.safeNewUserData, token: result.token});
+            res.status(201).json({msg: "User registered", user: result.safeNewUserData });
         }
         catch (err: any) {
             res.status(err.httpCode).json(err);
@@ -21,32 +21,8 @@ export default class AuthController {
         const user:IUserLogin = req.body;
         
         try {
-            const { userExists, acessToken, refreshToken } = await authService.login(user);
-            res.status(200).json({msg: "Logged in", _id: userExists._id, acessToken, refreshToken });
-        }
-        catch (err: any) {
-            res.status(err.httpCode).json(err);
-        }    
-    }
-
-    public async token (req: Request, res: Response) {
-        const tokenData = req.body;
-
-        try {
-            const acessToken = await authService.token(tokenData);
-            res.status(200).json({ acessToken });
-        }
-        catch (err: any) {
-            res.status(err.httpCode).json(err);
-        }    
-    }
-
-    public async logout (req: Request, res: Response) {
-        const { refreshToken } = req.body;
-
-        try {
-            await authService.logout(refreshToken);
-            res.sendStatus(204);
+            const { userExists } = await authService.login(user);
+            res.status(200).json({ msg: "Logged in", _id: userExists._id });
         }
         catch (err: any) {
             res.status(err.httpCode).json(err);
