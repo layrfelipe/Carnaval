@@ -1,7 +1,8 @@
 import { Router } from "express";
-const routes = Router();
 import UserController from "../controllers/UserController";
 import { IdValidator, UpdateUserValidator } from "../middlewares/ValidationMiddlewares";
+
+const routes = Router();
 
 const updateUserValidator = new UpdateUserValidator();
 const idValidator = new IdValidator();

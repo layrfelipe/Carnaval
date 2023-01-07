@@ -1,8 +1,9 @@
 import { Router } from "express";
 const routes = Router();
 import BlockController from "../controllers/BlockController";
-import { IdValidator, UpdateBlockValidator } from "../middlewares/ValidationMiddlewares";
+import { IdValidator, UpdateBlockValidator, RegisterBlockValidator } from "../middlewares/ValidationMiddlewares";
 
+const registerBlockMiddleware = new RegisterBlockValidator();
 const updateBlockMiddleware = new UpdateBlockValidator();
 const idValidator = new IdValidator()
 const blockController = new BlockController()
@@ -12,7 +13,9 @@ routes.get("/",
 );
 
 routes.post("/",
-    blockController.createBlock
+    blockController.createBlock,
+    registerBlockMiddleware.validationRules,
+    [registerBlockMiddleware.checkRules],
 );
 
 routes.get("/:id",

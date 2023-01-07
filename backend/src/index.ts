@@ -1,13 +1,13 @@
-import mongoose from "mongoose"
-import express from "express"
-import cors from "cors"
-import "dotenv/config"
+import "dotenv/config";
+import mongoose from "mongoose";
+import express from "express";
+import cors from "cors";
 
 import UserRoutes from "./routes/UserRoutes";
 import AuthRoutes from "./routes/AuthRoutes";
 import BlockRoutes from "./routes/BlockRoutes";
 
-const { PORT, DB_USER, DB_PASSWORD } = require("./config").development
+const { PORT, DB_USER, DB_PASSWORD } = require("./config").development;
 
 const app = express();
 

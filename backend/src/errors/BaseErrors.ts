@@ -75,6 +75,12 @@ export class BlockDoesNotExist extends BaseErrors {
     }
 }
 
+export class InvalidBlockID extends BaseErrors {
+    constructor() {
+        super('NOT_FOUND', HttpStatusCode.NOT_FOUND, "Invalid ID");
+    }
+}
+
 export class NameAlreadyInUse extends BaseErrors {
     constructor() {
         super('UNPROCESSABLE_ENTITY', HttpStatusCode.UNPROCESSABLE_ENTITY, "Name already in use");

@@ -22,7 +22,11 @@ const userSchema = new Schema({
 
     role: { type: String, required: false, enum: Role, default: Role.CITIZEN  },
 
-    loc: { type: locationSchema, required: true }
+    loc: { type: locationSchema, required: true },
+
+    favBlocks: [{ type: Schema.Types.ObjectId, ref: "Block", required: true, default: [] }],
+
+    friends: [{ type: Schema.Types.ObjectId, ref: "User", required: true , default: []}]
 }, {timestamps: true});
 
 const User = model('User', userSchema);
