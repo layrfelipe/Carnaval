@@ -2,22 +2,46 @@ import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import MapService from '../services/MapService';
 
 import L from "leaflet"
 
 const blockIcon = new L.Icon({
-    iconUrl: require("../assets/icons/green-icon.png"),
-    iconSize: new L.Point(25, 35),
+    iconUrl: require("../assets/icons/carnival.png"),
+    iconSize: new L.Point(35, 35),
 })
 
-const poiIcon = new L.Icon({
-    iconUrl: require("../assets/icons/red-icon.png"),
-    iconSize: new L.Point(42, 42),
+const policeIcon = new L.Icon({
+    iconUrl: require("../assets/icons/police.png"),
+    iconSize: new L.Point(35, 35),
 })
+
+const hospitalIcon = new L.Icon({
+    iconUrl: require("../assets/icons/hospital.png"),
+    iconSize: new L.Point(35, 35),
+})
+
+const subwayIcon = new L.Icon({
+    iconUrl: require("../assets/icons/subway.png"),
+    iconSize: new L.Point(30, 30),
+})
+
+const handlePoiIcon = (category: string) => {
+    let result;
+    switch (category) {
+        case "police":
+            result = policeIcon;
+            break;
+        case "hospital":
+            result = hospitalIcon;
+            break;
+        case "subway":
+            result = subwayIcon;
+            break;
+    }
+    return result
+}
 
 const Map = (props: any) => {
-
     return(
         <>
             <MapContainer center={[-22.9131349,-43.1977729]} zoom={14} scrollWheelZoom={true} style={{width: "100%", height: "100%"}}>
@@ -41,7 +65,7 @@ const Map = (props: any) => {
                 {
                     props.pois.map((poi: any, index: number) => {
                         return(
-                            <Marker position={poi.loc.coordinates} key={index} icon={poiIcon}>
+                            <Marker position={poi.loc.coordinates} key={index} icon={handlePoiIcon(poi.category)}>
                                 <Popup>
                                     {poi.name}
                                 </Popup>
@@ -49,8 +73,6 @@ const Map = (props: any) => {
                         );
                     })
                 }
-
-                <MapService />
             </MapContainer>
         </>
     );

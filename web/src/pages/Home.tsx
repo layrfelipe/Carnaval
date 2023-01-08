@@ -17,11 +17,11 @@ const Home = () => {
 
     useEffect(() => {
         axios.get("http://localhost:3002/blocks").then( (response) => {
-            setBlocks(response.data);
+            if (response) setBlocks(response.data);
         })
 
         axios.get("http://localhost:3002/pois").then( (response) => {
-            setPois(response.data);
+            if (response) setPois(response.data);
         })
 
     }, []);
@@ -29,8 +29,10 @@ const Home = () => {
     return(
         <>
             <div className={styles.container}>
-                <Sidebar />
-                <Map blocks={blocks} pois={pois}/>
+                <div className={styles.sidebarWrapper}>
+                    <Sidebar blocks={blocks} pois={pois} />
+                </div>
+                <Map blocks={blocks} pois={pois} />
             </div>
         </>
     );

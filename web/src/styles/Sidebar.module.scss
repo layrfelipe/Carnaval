@@ -1,14 +1,12 @@
-@import "../styles/variables.scss";
-
 .container {
-    width: $sidebarWidth;
-    height: $sidebarHeight;
     display: flex;
+    height: 100%;
+    width: 100%;
 
     .sidebar {
         background: black;
-        width: 100%;
         height: 100%;
+        padding: 0 1vw;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -18,6 +16,67 @@
             font-size: 30px;
             margin-top: 3rem;
             cursor: pointer;
+        }
+    }
+
+    .layers {
+        background: rgb(52, 52, 52);       
+        width: 30vw;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 3vh;
+        
+
+        h1 {
+            color: white;
+            font-size: 3rem;
+        }
+    }
+
+    .blocks {
+        background: rgb(52, 52, 52);       
+        width: 30vw;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 3vh;
+        overflow-y: auto;
+
+        h1 {
+            color: white;
+            font-size: 3rem;
+        }
+        
+        p {
+            background: orange;
+            padding: 2vh 2vw;
+            color: black;
+            width: 80%;
+            text-align: center;
+            margin-top: 2vh;
+            margin-bottom: 1vh;
+            border-radius: .25rem;
+            cursor: pointer;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+    }
+
+    .configs {
+        background: rgb(52, 52, 52);       
+        width: 30vw;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 3vh;
+
+        h1 {
+            color: white;
+            font-size: 3rem;
         }
     }
 }
