@@ -4,6 +4,7 @@ import "leaflet-defaulticon-compatibility";
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 import L from "leaflet"
+import MapConfigs from './MapConfigs';
 
 const blockIcon = new L.Icon({
     iconUrl: require("../assets/icons/carnival.png"),
@@ -44,7 +45,7 @@ const handlePoiIcon = (category: string) => {
 const Map = (props: any) => {
     return(
         <>
-            <MapContainer ref={props.mapRef} center={[-22.9131349,-43.1977729]} zoom={14} scrollWheelZoom={true} style={{width: "100%", height: "100%"}}>
+            <MapContainer ref={props.mapRef} center={props.center} zoom={props.zoom} scrollWheelZoom={props.scrollWheelZoom} style={{width: "100%", height: "100%"}}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
@@ -73,6 +74,8 @@ const Map = (props: any) => {
                         );
                     })
                 }
+
+                <MapConfigs />
             </MapContainer>
         </>
     );

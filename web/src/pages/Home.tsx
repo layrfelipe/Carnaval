@@ -11,6 +11,9 @@ import Map from '../components/Map';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
+    const center = [-22.9131349,-43.1977729]
+    const zoom = 14
+    const scrollWheelZoom = true
 
     const [map, setMap] = useState(null);
 
@@ -28,13 +31,14 @@ const Home = () => {
 
     }, []);
 
+
     return(
         <>
             <div className={styles.container}>
                 <div className={styles.sidebarWrapper}>
                     <Sidebar blocks={blocks} pois={pois} map={map}/>
                 </div>
-                <Map blocks={blocks} pois={pois} mapRef={setMap}/>
+                <Map blocks={blocks} pois={pois} mapRef={setMap} center={center} zoom={zoom} scrollWheelZoom={scrollWheelZoom}/>
             </div>
         </>
     );
