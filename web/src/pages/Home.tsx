@@ -14,6 +14,8 @@ const Home = () => {
     const center = [-22.9131349,-43.1977729]
     const zoom = 14
     const scrollWheelZoom = true
+    const attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    const url='https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png';
 
     const [map, setMap] = useState(null);
 
@@ -38,7 +40,7 @@ const Home = () => {
                 <div className={styles.sidebarWrapper}>
                     <Sidebar blocks={blocks} pois={pois} map={map}/>
                 </div>
-                <Map blocks={blocks} pois={pois} mapRef={setMap} center={center} zoom={zoom} scrollWheelZoom={scrollWheelZoom}/>
+                <Map url={url} attribution={attribution} blocks={blocks} pois={pois} mapRef={setMap} center={center} zoom={zoom} scrollWheelZoom={scrollWheelZoom}/>
             </div>
         </>
     );
