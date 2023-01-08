@@ -3,7 +3,6 @@ import { FaLayerGroup, FaList, FaWrench } from "react-icons/fa";
 
 import styles from '../styles/Sidebar.module.scss';
 
-
 const Sidebar = (props: any) => {
 
   const [showLayers, setShowLayers] = useState(false);
@@ -50,7 +49,12 @@ const Sidebar = (props: any) => {
             {
               props.blocks.map( (block: any, index: number) => {
                 return(
-                    <p key={index}>{block.name}</p>
+                    <p key={index} onClick={() => {
+                        props.map.flyTo(block.initialLoc.coordinates, 18);
+                      }}
+                    >
+                      {block.name}
+                    </p>
                 );
               })
             }

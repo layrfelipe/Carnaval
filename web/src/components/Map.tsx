@@ -44,7 +44,7 @@ const handlePoiIcon = (category: string) => {
 const Map = (props: any) => {
     return(
         <>
-            <MapContainer center={[-22.9131349,-43.1977729]} zoom={14} scrollWheelZoom={true} style={{width: "100%", height: "100%"}}>
+            <MapContainer ref={props.mapRef} center={[-22.9131349,-43.1977729]} zoom={14} scrollWheelZoom={true} style={{width: "100%", height: "100%"}}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
@@ -66,7 +66,7 @@ const Map = (props: any) => {
                     props.pois.map((poi: any, index: number) => {
                         return(
                             <Marker position={poi.loc.coordinates} key={index} icon={handlePoiIcon(poi.category)}>
-                                <Popup>
+                                <Popup >
                                     {poi.name}
                                 </Popup>
                             </Marker>

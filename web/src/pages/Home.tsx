@@ -12,8 +12,10 @@ import { useState, useEffect } from 'react';
 
 const Home = () => {
 
-    const [blocks, setBlocks] = useState([])
-    const [pois, setPois] = useState([])
+    const [map, setMap] = useState(null);
+
+    const [blocks, setBlocks] = useState([]);
+    const [pois, setPois] = useState([]);
 
     useEffect(() => {
         axios.get("http://localhost:3002/blocks").then( (response) => {
@@ -30,9 +32,9 @@ const Home = () => {
         <>
             <div className={styles.container}>
                 <div className={styles.sidebarWrapper}>
-                    <Sidebar blocks={blocks} pois={pois} />
+                    <Sidebar blocks={blocks} pois={pois} map={map}/>
                 </div>
-                <Map blocks={blocks} pois={pois} />
+                <Map blocks={blocks} pois={pois} mapRef={setMap}/>
             </div>
         </>
     );
