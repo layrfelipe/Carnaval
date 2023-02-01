@@ -3,36 +3,55 @@ import Constants from 'expo-constants';
 import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import SideMenu from '../components/SideMenu';
+import { useState } from "react"
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 const HomeScreen = ({navigation}) => {
+
+    const [sideMenu, showSideMenu] = useState(false)
+    const handleSideMenu = () => {
+        showSideMenu(!sideMenu)
+    }
+
+    const handleNothing = () => {
+        return
+    }
+
     return (
-        <View style={ styles.container }>
-            <View style={ styles.map }>
-                <TouchableOpacity style={ styles.menuButton }><FontAwesome name="bars" size={30} color="#781055"/></TouchableOpacity>
-                <TouchableOpacity style={ styles.gpsButton }><MaterialIcons name="gps-fixed" size={18} color="#781055"/></TouchableOpacity>
-            </View>
+        <View style={styles.container}>
+            { sideMenu && <SideMenu /> }
 
-            <View style={ styles.main }>
-                <View style={ styles.overDivider }>
-                    <View style={ styles.searchRow }>
-                        <View style={ styles.searchBox }>
-
-                        </View>
-                        <TouchableOpacity style={styles.threeDots}><Entypo name="dots-three-vertical" size={24} color="#781055"/></TouchableOpacity>
-                    </View>
-
-                    <View style={ styles.textRow }>
-                        <Text style={ styles.date }>fev 18, sábado</Text>
-                    </View>
+            <View style={ styles.belowSideMenuContainer }>
+                <View style={ styles.map }>
+                    <TouchableOpacity onPress={handleSideMenu} style={ styles.menuButton }><FontAwesome name="bars" size={30} color="#781055"/></TouchableOpacity>
+                    <TouchableOpacity onPress={sideMenu ? handleSideMenu : () => {}} style={ styles.gpsButton }><MaterialIcons name="gps-fixed" size={18} color="#781055"/></TouchableOpacity>
                 </View>
 
-                <View style={ styles.divider } />
+                <View style={ styles.main }>
+                    <View style={ styles.overDivider }>
+                        <View style={ styles.searchRow }>
+                            <View style={ styles.searchBox }>
+                                <FontAwesome name="search" size={24} color="#929292" />
+                                <Text style={ styles.searchPlaceholder }>Toque para buscar um bloco</Text>
+                            </View>
+                            <TouchableOpacity style={styles.threeDots}><Entypo name="dots-three-vertical" size={24} color="#781055"/></TouchableOpacity>
+                        </View>
 
-                <View style={ styles.underDivider }>
+                        <View style={ styles.textRow }>
+                            <Text style={ styles.date }>fev 18, sábado</Text>
+                        </View>
+                    </View>
 
+                    <View style={ styles.divider } />
+
+                    <View style={ styles.underDivider }>
+                        <MaterialCommunityIcons name="party-popper" size={100} color="#D9A0C6" />
+                        <Text style={ styles.tip }>Use a barra de pesquisa para localizar e adicionar blocos à sua agenda</Text>
+                    </View>
                 </View>
             </View>
         </View>
@@ -41,14 +60,17 @@ const HomeScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#EDEDED',
-      width: width,
-      height: height,
-      marginTop: Constants.statusBarHeight
+        width: width,
+        height: height,
+        backgroundColor: "#EDEDED",
+        marginTop: Constants.statusBarHeight,
+    },
+    belowSideMenuContainer: {
+        width: width,
+        height: height,
     },
     map: {
-        backgroundColor: "#EDEDED",
-        width: width,
+        width: "100%",
         flex: 1.5,
         flexDirection: "column",
     },
@@ -78,7 +100,7 @@ const styles = StyleSheet.create({
     },
     main: {
         backgroundColor: "#F1C4E2",
-        width: width,
+        width: "100%",
         flex: 1,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -92,6 +114,8 @@ const styles = StyleSheet.create({
     },
     underDivider: {
         flex: 2,
+        alignItems: "center",
+        justifyContent: "center",
     },
     searchRow: {
         flexDirection: "row",
@@ -106,10 +130,14 @@ const styles = StyleSheet.create({
         height: "80%",
         width: "90%",
         borderRadius: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        paddingLeft: 20
     },
     threeDots: {
         alignItems: "center",
-        justifyContent: "center",        
+        justifyContent: "center",
     },
     textRow: {
         height: "40%",
@@ -122,6 +150,18 @@ const styles = StyleSheet.create({
         bottom: 5,
         left: 15,
         fontWeight: 'bold'
+    },
+    tip: {
+        width: "50%",
+        textAlign: "center",
+        color: "#929292",
+        fontSize: 15,
+        marginTop: 10
+    },
+    searchPlaceholder: {
+        color: "#929292",
+        marginLeft: 10,
+        fontSize: 16
     }
 });
 
